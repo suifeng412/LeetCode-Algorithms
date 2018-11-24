@@ -293,6 +293,13 @@ nums1 中数字 x 的下一个更大元素是指 x 在 nums2 中对应位置的�
 nums1和nums2中所有元素是唯一的。  
 nums1和nums2 的数组大小都不超过1000。  
 
+解决思路：  
+通过Stack、HashMap解决  
+1、先遍历大数组nums2，首先将第一个元素入栈；  
+2、继续遍历，当当前元素小于栈顶元素时，继续将它入栈；当当前元素大于栈顶元素时，栈顶元素出栈，此时应将该出栈的元素与当前元素形成key-value键值对，存入HashMap中；  
+3、当遍历完nums2后，得到nums2中元素所对应的下一个更大元素的hash表；  
+4、遍历nums1的元素在hashMap中去查找‘下一个更大元素’，当找不到时则为-1。  
+
 ```java
 class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
