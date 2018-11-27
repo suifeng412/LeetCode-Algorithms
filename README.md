@@ -10,6 +10,7 @@
 
 ## 简单#Heap#
 + [703. 数据流中的第k大元素](#j8)
++ [743. 网络延迟时间](#j9)
 
 
 
@@ -530,3 +531,74 @@ class KthLargest {
   }
 }
 ```
+
+
+
+### <span id='j8'>743. 网络延迟时间</span>
+有 N 个网络节点，标记为 1 到 N。  
+
+给定一个列表 times，表示信号经过有向边的传递时间。 times[i] = (u, v, w)，其中 u 是源节点，v 是目标节点， w 是一个信号从源节点传递到目标节点的时间。  
+
+现在，我们向当前的节点 K 发送了一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 -1。  
+
+注意:  
+N 的范围在 [1, 100] 之间。  
+K 的范围在 [1, N] 之间。  
+times 的长度在 [1, 6000] 之间。   
+所有的边 times[i] = (u, v, w) 都有 1 <= u, v <= N 且 1 <= w <= 100。  
+
+
+迪杰克斯特拉算法Dijkstra Algorithm   
+https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Using_a_priority_queue
+```java
+class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        //graph存储图,数组第一个元素为终点，第二个元素为传播时间
+        Map<Integer, List<int[]>> graph = new HashMap();
+        for (int[] edge: times) {
+            if (!graph.containsKey(edge[0]))    graph.put(edge[0], new ArrayList());
+            graph.get(edge[0]).add(new int[]{edge[1], edge[2]});
+        }
+        //优先级队列，数组第一个元素为到该节点累计时间，第二个元素为节点号
+        PriorityQueue<int[]> heap = new PriorityQueue<int[]>((info1, info2) -> info1[0] - info2[0]);
+        heap.offer(new int[]{0, K});
+
+        Map<Integer, Integer> dist = new HashMap();
+
+        while (!heap.isEmpty()) {
+            int[] info = heap.poll();
+            int d = info[0], node = info[1];
+            //如果dist包含该节点，说明已经获得了该节点的最短距离
+            if (dist.containsKey(node)) continue;
+            dist.put(node, d);
+            if (graph.containsKey(node))
+                for (int[] edge: graph.get(node)) {
+                    int nei = edge[0], d2 = edge[1];
+                    if (!dist.containsKey(nei))  heap.offer(new int[]{d + d2, nei});
+                }
+        }
+
+        if (dist.size() != N) return -1;
+
+        int ans = 0;
+        for (int cand: dist.values())   ans = Math.max(ans, cand);
+
+        return ans;
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
