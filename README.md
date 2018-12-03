@@ -1243,9 +1243,10 @@ class Solution {
 
         for(int i=0;i<=rowIndex;i++){
             list.add(1);
-            for(int j=i;j>0;j--){
+            for(int j=i-1;j>=1;j--){
                 list.set(j, list.get(j)+list.get(j-1) );
             }
+
         }
         return list;
     }
