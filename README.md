@@ -27,7 +27,12 @@
 + [53. 最大子序和](#j19)
 + [66. 加一](#j20)
 + [88. 合并两个有序数组](#j21)
+<<<<<<< HEAD
 + [118. 杨辉三角](#j22)
+=======
++ [119. 杨辉三角 II](#j23)
++ [121. 买卖股票的最佳时机](#j24)
+>>>>>>> eed4b7999a699fef32c3b6eb6ff15ee8317c3cdc
 
 
 
@@ -1224,8 +1229,6 @@ class Solution {
 ```
 
 
-
-
 ### <span id='j22'>118. 杨辉三角</span>
 给定一个非负整数 numRows，生成杨辉三角的前 numRows 行  
 在杨辉三角中，每个数是它左上方和右上方的数的和。  
@@ -1275,6 +1278,33 @@ class Solution {
 }
 ```
 
+### <span id='j23'>119. 杨辉三角 II</span>
+给定一个非负索引 k，其中 k ≤ 33，返回杨辉三角的第 k 行。  
+在杨辉三角中，每个数是它左上方和右上方的数的和。  
+示例:
+```
+输入: 3
+输出: [1,3,3,1]
+```
+进阶：  
+你可以优化你的算法到 O(k) 空间复杂度吗？
+
+```java
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> list=new ArrayList<Integer>();
+
+        for(int i=0;i<=rowIndex;i++){
+            list.add(1);
+            for(int j=i-1;j>=1;j--){
+                list.set(j, list.get(j)+list.get(j-1) );
+            }
+
+        }
+        return list;
+    }
+}
+```
 
 
 
@@ -1287,6 +1317,57 @@ class Solution {
 
 
 
+=======
+### <span id='j24'>121. 买卖股票的最佳时机</span>
+给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。  
+如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。   
+注意你不能在买入股票前卖出股票。  
+示例 1:
+```
+输入: [7,1,5,3,6,4]
+输出: 5
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+```
+示例 2:
+```
+输入: [7,6,4,3,1]
+输出: 0
+解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
+```
+
+```java
+# 方法一 暴力法
+public class Solution {
+    public int maxProfit(int prices[]) {
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            for (int j = i + 1; j < prices.length; j++) {
+                int profit = prices[j] - prices[i];
+                if (profit > maxprofit)
+                    maxprofit = profit;
+            }
+        }
+        return maxprofit;
+    }
+}
+
+# 方法二 一次遍历
+public class Solution {
+    public int maxProfit(int prices[]) {
+        int minprice = Integer.MAX_VALUE;
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minprice)
+                minprice = prices[i];
+            else if (prices[i] - minprice > maxprofit)
+                maxprofit = prices[i] - minprice;
+        }
+        return maxprofit;
+    }
+}
+```
+>>>>>>> eed4b7999a699fef32c3b6eb6ff15ee8317c3cdc
 
 
 
