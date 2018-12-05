@@ -37,7 +37,7 @@
 + [219. 存在重复元素 II](#j29)
 + [268. 缺失数字](#j30)
 + [283. 移动零](#j31)
-
++ [414. 第三大的数](#j32)
 
 
 
@@ -1678,5 +1678,73 @@ class Solution {
     }
 }
 ```
+
+
+
+### <span id='j32'>414. 第三大的数</span>
+给定一个非空数组，返回此数组中第三大的数。如果不存在，则返回数组中最大的数。要求算法时间复杂度必须是O(n)。  
+
+示例 1:
+```
+输入: [3, 2, 1]
+输出: 1
+解释: 第三大的数是 1.
+```
+示例 2:
+```
+输入: [1, 2]
+输出: 2
+解释: 第三大的数不存在, 所以返回最大的数 2 .
+```
+示例 3:
+```
+输入: [2, 2, 3, 1]
+输出: 1
+解释: 注意，要求返回第三大的数，是指第三大且唯一出现的数。
+```
+存在两个值为2的数，它们都排第二。  
+
+```java
+class Solution {
+    public int thirdMax(int[] nums) {
+        Integer maxF = null;
+        Integer maxS = null;
+        Integer maxT = null;
+ 
+        for( Integer i : nums){
+            if (i.equals(maxF) || i.equals(maxT) || i.equals(maxS)){
+                continue;
+            }else if ( maxF == null || i > maxF ){
+                maxT = maxS;
+                maxS = maxF;
+                maxF = i;
+            }else if (maxS == null || i > maxS){
+                maxT = maxS;
+                maxS = i;
+            }else if (maxT == null || i > maxT){
+                maxT = i;
+            }
+ 
+        }
+ 
+        return maxT == null ? maxF : maxT;
+    }
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
