@@ -46,6 +46,7 @@
 + [581. 最短无序连续子数组](#j38)
 + [605. 种花问题](#j39)
 + [628. 三个数的最大乘积](#j40)
++ [643. 子数组最大平均数 I](#j41)
 
 
 
@@ -2139,11 +2140,66 @@ public class Solution {
 }
 ```
 
-   
-   
-   
-   
-   
+
+
+### <span id='j41'>643. 子数组最大平均数 I</span>
+给定 n 个整数，找出平均数最大且长度为 k 的连续子数组，并输出该最大平均数。  
+
+示例 1:
+```
+输入: [1,12,-5,-6,50,3], k = 4
+输出: 12.75
+解释: 最大平均数 (12-5-6+50)/4 = 51/4 = 12.75
+```
+注意:  
+1 <= k <= n <= 30,000。  
+所给数据范围 [-10,000，10,000]。    
+
+```java
+public class Solution {
+    public double findMaxAverage(int[] nums, int k) {
+        if (nums.length < 1 || nums == null) {
+            return -1;
+        }
+        int sum = 0;
+        int max = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];// 先求前k个数的和，之后不断维护这个数组即可。
+            max = sum;
+        }
+        for (int i = k; i < nums.length; i++) {
+            sum += nums[i] - nums[i - k];
+            if (sum > max) {
+                max = sum;
+            }
+        }
+        return max * 1.0 / k;
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    
    
    
