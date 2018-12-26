@@ -1,7 +1,7 @@
 # 目录 
 ## 简单#HashTab#
 + [136. 只出现一次的数字](#j1)
-
++ [202. 快乐数](#j2)
 
 
 
@@ -35,5 +35,37 @@ class Solution {
 ```
 
 
+### <span id='j2'>202. 快乐数</span>
+编写一个算法来判断一个数是不是“快乐数”。
 
+一个“快乐数”定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程直到这个数变为 1，也可能是无限循环但始终变不到 1。如果可以变为 1，那么这个数就是快乐数。
 
+示例: 
+![image](https://raw.githubusercontent.com/suifeng412/LeetCode-Algorithms/master/public/2018-12-26_230658.jpg)
+
+```java
+// 不是快乐数的数称为不快乐数（unhappy number），所有不快乐数的数位平方和计算，最後都会进入 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4 的循环中。
+class Solution {
+    public boolean isHappy(int n) {
+        String nums = n + "";
+        int num = n;
+        while (true) {
+			// 为1 说明是快乐数 跳出
+			 if (num == 1) {
+				 return true;
+			// 为4说明肯定不是快乐数，因为会无限循环  4 = 16; 16 = 37 37 = 65	 
+			 } else if (num == 4) {
+				 return false;
+			 } else {
+			// 继续循环
+				 nums = num + "";
+				 num = 0;
+			 }
+			 for (int i = 0, length = nums.length(); i < length; i++) {
+				 int ns = Character.getNumericValue(nums.charAt(i));
+				 num += ns*ns;
+			 }
+		 }
+    }
+}
+```
