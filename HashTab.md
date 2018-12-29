@@ -3,6 +3,7 @@
 + [136. 只出现一次的数字](#j1)
 + [202. 快乐数](#j2)
 + [204. 计数质数](#j3)
++ [205. 同构字符串](#j4)
 
 
 
@@ -98,6 +99,56 @@ class Solution {
             }
         }
         return count;
+    }
+}
+```
+
+
+### <span id='j4'>205. 同构字符串</span>
+给定两个字符串 s 和 t，判断它们是否是同构的。  
+如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。  
+所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身。  
+
+示例 1:
+```
+输入: s = "egg", t = "add"
+输出: true
+```
+示例 2:
+```
+输入: s = "foo", t = "bar"
+输出: false
+```
+示例 3:
+```
+输入: s = "paper", t = "title"
+输出: true
+```
+说明:  
+你可以假设 s 和 t 具有相同的长度。  
+
+```java
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        Map<Character, Character> sMap = new HashMap<>();
+        Map<Character, Character> tMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char sE = s.charAt(i);
+            char tE = t.charAt(i);
+            Character sVal = sMap.get(sE);
+            if (sVal == null) {
+                if (tMap.containsKey(tE)) {
+                    return false;
+                }
+                sMap.put(sE, tE);
+                tMap.put(tE, sE);
+                continue;
+            }
+            if (sVal != tE) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 ```
