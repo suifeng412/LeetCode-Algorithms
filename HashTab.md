@@ -5,6 +5,7 @@
 + [204. 计数质数](#j3)
 + [205. 同构字符串](#j4)
 + [242. 有效的字母异位词](#j5)
++ [290. 单词模式](#j6)
 
 
 
@@ -196,3 +197,61 @@ class Solution {
 ```
 
 
+### <span id='j6'>290. 单词模式</span>
+给定一种 pattern(模式) 和一个字符串 str ，判断 str 是否遵循相同的模式。  
+这里的遵循指完全匹配，例如， pattern 里的每个字母和字符串 str 中的每个非空单词之间存在着双向连接的对应模式。  
+
+示例1:
+```
+输入: pattern = "abba", str = "dog cat cat dog"
+输出: true
+```
+示例 2:
+```
+输入:pattern = "abba", str = "dog cat cat fish"
+输出: false
+```
+示例 3:
+```
+输入: pattern = "aaaa", str = "dog cat cat dog"
+输出: false
+```
+示例 4:
+```
+输入: pattern = "abba", str = "dog dog dog dog"
+输出: false
+```
+说明:  
+你可以假设 pattern 只包含小写字母， str 包含了由单个空格分隔的小写字母。   
+
+```java
+class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        String[] arr = str.split(" ");
+        if(pattern.length() != arr.length) return false;
+        Map<Character,String> map = new HashMap<>();
+        for(int i = 0;i < pattern.length();i++)
+        {
+            if(map.containsKey(pattern.charAt(i)))
+            {
+                //包含key的情况，要检查对应的value是否一致
+                if(!map.get(pattern.charAt(i)).equals(arr[i])){
+                    return false;
+                }
+            }
+            else
+            {
+                //不包含key的情况下已经有了对应的value，对应到示例4的错误
+                if(map.containsValue(arr[i])){
+                    return false;
+                }
+                else
+                {
+                    map.put(pattern.charAt(i),arr[i]);
+                }
+            }
+        }
+        return true;
+    }
+}
+```
