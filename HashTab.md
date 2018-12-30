@@ -6,6 +6,7 @@
 + [205. 同构字符串](#j4)
 + [242. 有效的字母异位词](#j5)
 + [290. 单词模式](#j6)
++ [349. 两个数组的交集](#j7)
 
 
 
@@ -252,6 +253,55 @@ class Solution {
             }
         }
         return true;
+    }
+}
+```
+
+
+### <span id='j7'>349. 两个数组的交集</span>
+给定两个数组，编写一个函数来计算它们的交集。  
+
+示例 1:
+```
+输入: nums1 = [1,2,2,1], nums2 = [2,2]
+输出: [2]
+```
+示例 2:
+```
+输入: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+输出: [9,4]
+```
+说明:  
+输出结果中的每个元素一定是唯一的。  
+我们可以不考虑输出结果的顺序。  
+
+```java
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+
+        for (int i = 0; nums1 != null && i < nums1.length; i++) {
+            set.add(nums1[i]);
+        }
+        for (int i = 0; nums2 != null && i < nums2.length; i++) {
+            if (set.contains(nums2[i])) {
+                set2.add(nums2[i]);
+            }
+        }
+
+        if (set2.isEmpty()) {
+            return new int[0];
+        }
+
+        int[] res = new int[set2.size()];
+        Iterator<Integer> iterator = set2.iterator();
+        int idx = 0;
+        while (iterator.hasNext()) {
+            res[idx++] = iterator.next();
+        }
+
+        return res;
     }
 }
 ```
